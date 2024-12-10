@@ -8,6 +8,10 @@ class EmployeeSerializer(serializers.Serializer):
     password=serializers.CharField(max_length=30)
     phone=serializers.CharField(max_length=10)
 
+    def create(self, validated_data):
+        print("create method called.")
+        return Employee.objects.create(**validated_data)
+
 class UserSerializer(serializers.Serializer):
     username= serializers.CharField(max_length=30)
     first_name=serializers.CharField(max_length=30)
