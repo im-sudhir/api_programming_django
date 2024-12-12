@@ -23,7 +23,17 @@ def employeeListView(request):
             return JsonResponse(serializer.errors,safe=False)
 
 
+@csrf_exempt
 def userListView(request):
-    users= User.objects.all()
-    serializer= UserSerializer(users, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    if request.method=='GET':
+        users= User.objects.all()
+        serializer= UserSerializer(users, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method=='POST':
+        jsondata=JSONParser().parse(request)
+        serializer=UserSerializer(data=jsondata)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            return JsonResponse(serializer.errors,safe=False)

@@ -9,7 +9,6 @@ class EmployeeSerializer(serializers.Serializer):
     phone=serializers.CharField(max_length=10)
 
     def create(self, validated_data):
-        print("create method called.")
         return Employee.objects.create(**validated_data)
 
 class UserSerializer(serializers.Serializer):
@@ -17,3 +16,6 @@ class UserSerializer(serializers.Serializer):
     first_name=serializers.CharField(max_length=30)
     last_name=serializers.CharField(max_length=30)
     email=serializers.EmailField()
+
+    def create(self, validated_data):
+        return User.objects.create(**validated_data)
